@@ -1,4 +1,4 @@
-import { Page, test } from '@playwright/test';
+import { Browser, Page, chromium, test } from '@playwright/test';
 
 
 export class BasePage {
@@ -7,23 +7,31 @@ export class BasePage {
     this.page = page;
   }
 
-  async openPage(url: string) {
-    await test.step(`Open url: ${url}`, async () => {
-      let success = false;
-      while (!success) {
-        try {
-          await Promise.all([
-            this.page.goto(url, { timeout: 20000 }),
-            this.page.waitForResponse(response => response.ok(), { timeout: 20000 })
-          ]);
-          console.log(this.page);
-          success = true;
-        } catch (e) {
-          await this.page.waitForTimeout(5000); // пауза между попытками
+  async openPage(url: string): Promise<Page | null> {
+    const browser: Browser = await chromium.launch();
+    this.page = await browser.newPage();
+    let success = false;
+    
+    try {
+        while (!success) {
+            try {
+                await Promise.all([
+                    this.page.goto(url, { timeout: 20000 }),
+                    this.page.waitForResponse(response => response.ok(), { timeout: 20000 })
+                ]);
+                success = true;
+            } catch (e) {
+                await this.page.waitForTimeout(5000); // пауза между попытками
+            }
         }
-      }
-    });
-  }
+        return this.page;
+    } catch (error) {
+        console.error('Ошибка при открытии страницы:', error);
+        return null;
+    } finally {
+        await browser.close();
+    }
+}
 
   async reload() {
     const currentUrl = this.page.url();

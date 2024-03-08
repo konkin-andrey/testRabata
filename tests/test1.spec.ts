@@ -6,8 +6,10 @@ test.describe(`Create copy`, async () => {
 
 
   test("Copy file owned by other user", async ({ loginPage }) => {
+    
     loginPage.loginAs();
-    console.log(123);
+
+    //await loginPage.page.goto(`${process.env.BASE_URL}`);
   });
 
 });
@@ -15,3 +17,5 @@ test.describe(`Create copy`, async () => {
 test.afterAll(async ({ request }) => {
 
 });
+
+

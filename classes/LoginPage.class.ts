@@ -16,6 +16,8 @@ export class LoginPage extends BasePage {
     await test.step(`Open login page`, async () => {
       await this.openPage(`${process.env.BASE_URL}/login`);
     });
+    const delay = ms => new Promise(r => setTimeout(r, ms));
+    await delay(123123);
   }
   async setLogin(login: string) {
     await test.step(`set login`, async () => {
@@ -47,6 +49,7 @@ export class LoginPage extends BasePage {
   async loginAs() {
     await test.step(`Login`, async () => {
       await this.openLoginPage();
+
       await this.setLogin(`${process.env.LOGIN}`);
       await this.setPassword(`${process.env.PASSWORD}`);
     });

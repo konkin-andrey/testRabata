@@ -1,6 +1,7 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
 import { RegData } from '../types';
+import { delay } from './utils.class';
 export class RegistrationPage extends BasePage {
     NAME_FIELD: Locator;
     SUBMIT_BUTTON: Locator;
@@ -75,7 +76,6 @@ export class RegistrationPage extends BasePage {
       await this.openRegistationPage();
       const MailosaurClient = require("mailosaur");
       const mailosaur = new MailosaurClient("gFTFP7QNlnsE52Dwx9SNv40rUVm7qfzZ");
-      const delay = ms => new Promise(r => setTimeout(r, ms));
       await delay(3000);
       await this.setName(name);
       await this.setMail(mail);

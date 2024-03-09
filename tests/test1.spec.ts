@@ -1,14 +1,13 @@
 
 import { expect } from '@playwright/test';
 import { test } from '../pom'
-import { Utils } from '../utils.class'
+import { Utils, delay } from '../classes/utils.class'
 test.describe(`Create copy`, async () => {
 
 
   test.skip("Copy file owned by other user123", async ({ loginPage }) => {
 
     await loginPage.loginAs(`gz8cvbhj@mailosaur.net`, `I_see_dead_people_97`);
-    const delay = ms => new Promise(r => setTimeout(r, ms));
     await delay(100001);
     //await loginPage.page.goto(`${process.env.BASE_URL}`);
   });
@@ -16,7 +15,6 @@ test.describe(`Create copy`, async () => {
   test.skip("Copy file owned by other user", async ({ registrationPage, request }) => {
 
     await registrationPage.registerAs("andreypetrov", "gz8cvbhj@mailosaur.net", "I_see_dead_people_97");
-    // const delay = ms => new Promise(r => setTimeout(r, ms));
     // await delay(100001);
     const utils = new Utils();
     // console.log(await utils.getMailLink());
@@ -28,8 +26,13 @@ test.describe(`Create copy`, async () => {
 
 test("cacl", async ({ calcPage }) => {
 
-  calcPage.openCalculator();
-  
+  await calcPage.openCalculator();
+
+  // calcPage.RADIO_BACKUP.click();
+  await calcPage.testFirstCalculatorMode();
+  await calcPage.testSecondCalculatorMode();
+
+  await delay(100000);
 
 });
 

@@ -9,7 +9,6 @@ export class BasePage {
 
   async openPage(url: string): Promise<Page | null> {
     const browser: Browser = await chromium.launch();
-    this.page = await browser.newPage();
     let success = false;
     
     try {
@@ -24,12 +23,13 @@ export class BasePage {
                 await this.page.waitForTimeout(5000); // пауза между попытками
             }
         }
+        await this.page.waitForLoadState('domcontentloaded');
         return this.page;
     } catch (error) {
         console.error('Ошибка при открытии страницы:', error);
         return null;
     } finally {
-        await browser.close();
+        //await browser.close();
     }
 }
 

@@ -16,21 +16,20 @@ export class LoginPage extends BasePage {
     await test.step(`Open login page`, async () => {
       await this.openPage(`${process.env.BASE_URL}/login`);
     });
-    const delay = ms => new Promise(r => setTimeout(r, ms));
-    await delay(123123);
   }
   async setLogin(login: string) {
     await test.step(`set login`, async () => {
-      await this.LOGIN_FIELD.type(login, {timeout: 50});
-      expect(this.LOGIN_FIELD).toHaveText(login);
+      await this.LOGIN_FIELD.clear();
+      await this.LOGIN_FIELD.type(login, {timeout: 250});
+      expect(await this.LOGIN_FIELD.inputValue()).toBe(login);
     });
   }
   async setPassword(password: string) {
     await test.step(`set password`, async () => {
-      await this.PASSWORD_FIELD.type(password, {timeout: 50});
+      await this.PASSWORD_FIELD.clear();
+      await this.PASSWORD_FIELD.type(password, {timeout: 250});
     });
   }
-
 
   async clickSubmitButton(password: string) {
     await test.step(`set password`, async () => {
@@ -38,20 +37,11 @@ export class LoginPage extends BasePage {
     });
   }
 
-
-
-  async openRegistationPage() {
-    await test.step(`Open registration page`, async () => {
-      await this.openPage(`${process.env.API_TOKEN}/signup`);
-    });
-  }
-
   async loginAs() {
     await test.step(`Login`, async () => {
       await this.openLoginPage();
-
-      await this.setLogin(`${process.env.LOGIN}`);
-      await this.setPassword(`${process.env.PASSWORD}`);
+      await this.setLogin(`123123`);
+      await this.setPassword(`123345`);
     });
   }
   

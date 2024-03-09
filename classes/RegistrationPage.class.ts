@@ -9,6 +9,7 @@ export class RegistrationPage extends BasePage {
     PASSWORD_FIELD_SEC: Locator;
     CONF_CHBOX: Locator;
     SIGNUP_BTN: Locator;
+  MAIL_ERROR_FLD: Locator;
   constructor(page: Page) {
     super(page);
     this.NAME_FIELD = this.page.locator('input[id=registration_form_fullName]');
@@ -18,7 +19,7 @@ export class RegistrationPage extends BasePage {
     this.SUBMIT_BUTTON = this.page.locator('button[type=submit]');
     this.CONF_CHBOX = this.page.locator('input[id=registration_form_agreeTerms]');
     this.SIGNUP_BTN = this.page.locator('button').filter({ hasText: 'Sign up' })
-
+    this.MAIL_ERROR_FLD = this.page.locator("p[data-error-map]");
   }
   
   async openLoginPage() {
@@ -73,22 +74,12 @@ export class RegistrationPage extends BasePage {
   async registerAs(name: string, mail: string, password_fst: string, password_sec = password_fst) {
     await test.step(`Login`, async () => {
       await this.openRegistationPage();
-      const MailosaurClient = require("mailosaur");
-      const mailosaur = new MailosaurClient("gFTFP7QNlnsE52Dwx9SNv40rUVm7qfzZ");
-      const delay = ms => new Promise(r => setTimeout(r, ms));
-      await delay(3000);
       await this.setName(name);
       await this.setMail(mail);
       await this.setPasswords(password_fst, password_sec);
       await this.setAgreeCheckBox();
       await this.clickSignUpButton();
-     
-      await delay(10000);
-      
-      const email = await mailosaur.messages.get("cahemglc", {
-        sentTo: "anything@cahemglc.mailosaur.net",
-      });
-      console.log("email", email);
+      //await expect(this.MAIL_ERROR_FLD, `При завершении регистрации возникла ошибка`).not.toBeAttached();
     });
   }
   

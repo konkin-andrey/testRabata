@@ -10,28 +10,28 @@ export class BasePage {
   async openPage(url: string): Promise<Page | null> {
     const browser: Browser = await chromium.launch();
     let success = false;
-    
+
     try {
-        while (!success) {
-            try {
-                await Promise.all([
-                    this.page.goto(url, { timeout: 20000 }),
-                    this.page.waitForResponse(response => response.ok(), { timeout: 20000 })
-                ]);
-                success = true;
-            } catch (e) {
-                await this.page.waitForTimeout(5000); // пауза между попытками
-            }
+      while (!success) {
+        try {
+          await Promise.all([
+            this.page.goto(url, { timeout: 20000 }),
+            this.page.waitForResponse(response => response.ok(), { timeout: 20000 })
+          ]);
+          success = true;
+        } catch (e) {
+          await this.page.waitForTimeout(5000); // пауза между попытками
         }
-        await this.page.waitForLoadState('domcontentloaded');
-        return this.page;
+      }
+      await this.page.waitForLoadState('domcontentloaded');
+      return this.page;
     } catch (error) {
-        console.error('Ошибка при открытии страницы:', error);
-        return null;
+      console.error('Ошибка при открытии страницы:', error);
+      return null;
     } finally {
-        //await browser.close();
+      //await browser.close();
     }
-}
+  }
 
   async reload() {
     const currentUrl = this.page.url();

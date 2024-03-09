@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "npx playwright test tests  --workers 1 --trace on --headed"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/konkin-andrey/testRabata.git"

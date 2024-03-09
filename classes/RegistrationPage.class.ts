@@ -1,6 +1,7 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
 import { RegData } from '../types';
+import { delay } from './utils.class';
 export class RegistrationPage extends BasePage {
     NAME_FIELD: Locator;
     SUBMIT_BUTTON: Locator;

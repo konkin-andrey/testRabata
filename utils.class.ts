@@ -1,5 +1,5 @@
 
-import { Inbox } from "mailinator-inbox"
+import MailosaurClient from "mailosaur";
 
 export class Utils {
 
@@ -8,8 +8,12 @@ export class Utils {
 
 
 
-
-  async createMailBox(mailName: string) {
-    const inbox = new Inbox(mailName);
+  async getMailLink(apiKey: string, mail: string) {
+    const mailosaur = new MailosaurClient(apiKey);
+    const criteria = {
+      sentTo: mail+"@mailosaur.net"
+    }
+    const email = await mailosaur.messages.get(mail, criteria)
+    return email.html.links.find(el=> el.href.includes("verif"));
   }
 }

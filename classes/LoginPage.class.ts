@@ -9,7 +9,7 @@ export class LoginPage extends BasePage {
     super(page);
     this.LOGIN_FIELD = this.page.locator('input[id=username]');
     this.PASSWORD_FIELD = this.page.locator('input[id=password]');
-    this.SUBMIT_BUTTON = this.page.locator('button[type=submit]');
+    this.SUBMIT_BUTTON = this.page.locator('button').filter({ hasText: 'Log in' })
   }
 
   async openLoginPage() {
@@ -18,7 +18,7 @@ export class LoginPage extends BasePage {
     });
   }
   async setLogin(login: string) {
-    await test.step(`set login`, async () => {
+    await test.step(`Set login`, async () => {
       await this.LOGIN_FIELD.clear();
       await this.LOGIN_FIELD.type(login, {timeout: 250});
       expect(await this.LOGIN_FIELD.inputValue()).toBe(login);
@@ -31,17 +31,18 @@ export class LoginPage extends BasePage {
     });
   }
 
-  async clickSubmitButton(password: string) {
-    await test.step(`set password`, async () => {
+  async clickSubmitButton() {
+    await test.step(`Сlick Submit button`, async () => {
       await this.SUBMIT_BUTTON.click();
     });
   }
 
-  async loginAs() {
-    await test.step(`Login`, async () => {
+  async loginAs(login: string, password: string) {
+    await test.step(`Login as: ${login}, password: ${password}`, async () => {
       await this.openLoginPage();
-      await this.setLogin(`123123`);
-      await this.setPassword(`123345`);
+      await this.setLogin(login);
+      await this.setPassword(password);
+      await this.clickSubmitButton();
     });
   }
   

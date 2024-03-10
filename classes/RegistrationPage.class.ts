@@ -1,7 +1,5 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
-import { RegData } from '../types';
-import { delay } from './utils.class';
 export class RegistrationPage extends BasePage {
     NAME_FIELD: Locator;
     SUBMIT_BUTTON: Locator;
@@ -73,14 +71,14 @@ export class RegistrationPage extends BasePage {
   }
 
   async registerAs(name: string, mail: string, password_fst: string, password_sec = password_fst) {
-    await test.step(`Login`, async () => {
+    await test.step(`Log in`, async () => {
       await this.openRegistationPage();
       await this.setName(name);
       await this.setMail(mail);
       await this.setPasswords(password_fst, password_sec);
       await this.setAgreeCheckBox();
       await this.clickSignUpButton();
-      //await expect(this.MAIL_ERROR_FLD, `При завершении регистрации возникла ошибка`).not.toBeAttached();
+      expect(await this.MAIL_ERROR_FLD.count(), `При завершении регистрации возникла ошибка`).toBe(0);
     });
   }
   

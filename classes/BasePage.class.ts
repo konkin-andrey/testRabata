@@ -29,7 +29,7 @@ export class BasePage {
       console.error('Ошибка при открытии страницы:', error);
       return null;
     } finally {
-      //await browser.close();
+      await browser.close();
     }
   }
 

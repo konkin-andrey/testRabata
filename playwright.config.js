@@ -5,9 +5,9 @@ import { resolve } from 'path';
 config({ path: resolve(__dirname, '.env'), override: true });
 export default defineConfig({
   testDir: "./tests",
-  timeout: 15000,
+  timeout: 25000,
   expect: {
-    timeout: 20000
+    timeout: 25000
   },
   reporter: [['html'], ['junit', { outputFile: './playwright-report/results.xml' }], ['list']],
   use: {

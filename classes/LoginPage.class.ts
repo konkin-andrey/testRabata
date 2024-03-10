@@ -11,7 +11,7 @@ export class LoginPage extends BasePage {
     this.LOGIN_FIELD = this.page.locator('input[id=username]');
     this.PASSWORD_FIELD = this.page.locator('input[id=password]');
     this.SUBMIT_BTN = this.page.locator('button').filter({ hasText: 'Log in' });
-    this.TRY_FOR_FREE_BTN = this.page.locator('a[href=signup]');//.filter({ hasText: 'Try it For Free' });
+    this.TRY_FOR_FREE_BTN = this.page.locator('a[href=signup]');
   }
 
   async openLoginPage() {

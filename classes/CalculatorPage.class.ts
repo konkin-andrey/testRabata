@@ -1,6 +1,7 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
-import { getRandomInRange } from './utils.class';
+import { getRandomInRange, roundTo10 } from './utils.class';
+import defines from './defines';
 
 
 export class CalculatorPage extends BasePage {
@@ -25,8 +26,7 @@ export class CalculatorPage extends BasePage {
       slider2 = this.page.locator('[id="dataDownloadInput"]'),
       final_sum = this.page.locator('p[id="rabataMobileApi"]'),
       value1 = getRandomInRange(1, 1000),
-      value2 = getRandomInRange(1, 1000),
-      base_cost = 0.015;
+      value2 = getRandomInRange(1, 1000);
 
     await this.RADIO_BASIC.click();
 
@@ -47,18 +47,14 @@ export class CalculatorPage extends BasePage {
 
     const actual = +(await final_sum.innerText()).match(/\d+/g)[0],
       // прайс base_cost за гигабайт трафика, на форме слайдер в тб, плюс на 12 месяцев в году
-      calculated = (value1 + value2) * 1000 * base_cost * 12;
-
-    console.log(actual, calculated);
-    expect(actual).toEqual(calculated);
+      calculated = (value1 + value2) * 1000 * defines.tariff_1_price * 12;
+    expect(actual, `вычисленное значение для первого тарифа: ${calculated} не соответствует значению в калькуляторе: ${actual}`).toEqual(calculated);
   }
 
-  async testSecondCalculatorMode() {
+  async testSecondCalculatorMode(value = getRandomInRange(1, 1000)) {
     const slider = this.page.locator('[id="dataStoredInput"]'),
-      final_sum = this.page.locator('p[id="rabataMobile"]'),
-      value = getRandomInRange(1, 1000),
-      base_cost = 59;
-
+      final_sum = this.page.locator('p[id="rabataMobile"]');
+      //value = getRandomInRange(1, 1000),
     await this.RADIO_BACKUP.click();
 
     await slider.evaluate((slider: any, input_value: number) => {
@@ -71,9 +67,8 @@ export class CalculatorPage extends BasePage {
 
     const actual = +(await final_sum.innerText()).match(/\d+/g)[0],
       // прайс base_cost за 10 тб трафика, плюс на 12 месяцев в году
-      calculated = value * base_cost * 12 / 10;
-    console.log(actual, calculated);
-    expect(actual).toEqual(calculated);
+    calculated = roundTo10(value) * defines.tariff_2_price * 12 / 10;
+    expect.soft(actual, `вычисленное значение для трафика: ${value}TB по второму тарифу: ${calculated} не соответствует значению в калькуляторе: ${actual}`).toEqual(calculated);
   }
 
 

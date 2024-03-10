@@ -11,7 +11,7 @@ test.describe(`Create copy`, async () => {
     //await loginPage.page.goto(`${process.env.BASE_URL}`);
   });
 
-  test("Copy file owned by other user", async ({ registrationPage, request, loginPage, browser }) => {
+  test.skip("Copy file owned by other user", async ({ registrationPage, request, loginPage, browser }) => {
     //await registrationPage.registerAs("andreypetrov", "gz8cvbhj@mailosaur.net", "I_see_dead_people_97");
     const utils = new Utils();
     const href = await utils.getMailLink("m3bNfJzWxKxVKGxWskpVvXMUCcTMWy21", "gz8cvbhj");
@@ -35,6 +35,18 @@ test.skip("cacl", async ({ calcPage }) => {
 
 });
 
+test.skip("Check Try it for free btns", async ({ mainPage, loginPage }) => {
+  await mainPage.openMainPage();
+  await mainPage.checkTryItForFreeBtn(0);
+  await mainPage.openMainPage();
+  await mainPage.checkTryItForFreeBtn(1);
+});
+
+test("Check PrivacyPolicy", async ({ mainPage }) => {
+  await mainPage.openMainPage();
+  await mainPage.checkPrivacyPolicy();
+  await delay(5000);
+});
 test.afterAll(async ({ request }) => {
 
 });

@@ -4,12 +4,14 @@ import { BasePage } from './BasePage.class';
 export class LoginPage extends BasePage {
     LOGIN_FIELD: Locator;
     PASSWORD_FIELD: Locator;
-    SUBMIT_BUTTON: Locator;
+    SUBMIT_BTN: Locator;
+    TRY_FOR_FREE_BTN: Locator;
   constructor(page: Page) {
     super(page);
     this.LOGIN_FIELD = this.page.locator('input[id=username]');
     this.PASSWORD_FIELD = this.page.locator('input[id=password]');
-    this.SUBMIT_BUTTON = this.page.locator('button').filter({ hasText: 'Log in' })
+    this.SUBMIT_BTN = this.page.locator('button').filter({ hasText: 'Log in' });
+    this.TRY_FOR_FREE_BTN = this.page.locator('a[href=signup]');//.filter({ hasText: 'Try it For Free' });
   }
 
   async openLoginPage() {
@@ -33,7 +35,7 @@ export class LoginPage extends BasePage {
 
   async clickSubmitButton() {
     await test.step(`Сlick Submit button`, async () => {
-      await this.SUBMIT_BUTTON.click();
+      await this.SUBMIT_BTN.click();
     });
   }
 
@@ -45,5 +47,5 @@ export class LoginPage extends BasePage {
       await this.clickSubmitButton();
     });
   }
-  
+
 }

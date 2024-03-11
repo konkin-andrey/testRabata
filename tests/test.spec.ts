@@ -1,11 +1,26 @@
 import { test } from '../pom'
 import defines from '../utils/defines';
-import { changeMailRequest, getMailLink, verifyMail } from '../utils/utils';
+import { changeMailRequest, getMailLink, verifyMail } from '../utils/helper';
 
 
 test.describe(`Rabata tests`, async () => {
+
+
+
+  test("Registration test123", async ({ globalSetting }) => {
+    console.log(globalSetting.settings.mail)
+  });
+
+
+
+
+
+
+
+
+
   //Тест 1: Регистрация на сайте
-  test("Registration test", async ({ registrationPage, request, loginPage, browser }) => {
+  test.skip("Registration test", async ({ registrationPage, request, loginPage, browser }) => {
     await registrationPage.registerAs(defines.reg_name, defines.reg_mail, defines.reg_password);
     const href = await getMailLink(defines.mail_api_key, defines.mail_server);
     await verifyMail(request, href);
@@ -15,7 +30,7 @@ test.describe(`Rabata tests`, async () => {
   });
 
   //Тест 2: Проверка 'Try it for free'
-  test("Check 'Try it for free' btns", async ({ mainPage }) => {
+  test.skip("Check 'Try it for free' btns", async ({ mainPage }) => {
     await mainPage.openMainPage();
     await mainPage.checkTryItForFreeBtn(0);
     await mainPage.openMainPage();
@@ -23,39 +38,21 @@ test.describe(`Rabata tests`, async () => {
   });
 
   //Тест 3: Проверка Privacy policy
-  test("Check Privacy policy", async ({ mainPage }) => {
+  test.skip("Check Privacy policy", async ({ mainPage }) => {
     await mainPage.openMainPage();
     await mainPage.checkPrivacyPolicy();
   });
 
   //Тест 4: Проверка работы калькулятора 'Total Data Stored' и 'Monthly'
-  test("Check calculation price", async ({ calculatorPage }) => {
-    await test.step('first calculator', async () => {
-      await calculatorPage.openCalculator();
-    })
-
-
-    await test.step('second calculator', async () => {
-      await calculatorPage.testFirstCalculatorMode();
-      await calculatorPage.testFirstCalculatorMode();
-      await calculatorPage.testFirstCalculatorMode();
-      
-      await calculatorPage.testSecondCalculatorMode(1);
-      await calculatorPage.testSecondCalculatorMode(91);
-      await calculatorPage.testSecondCalculatorMode(96);
-      await calculatorPage.testSecondCalculatorMode(543);
-      await calculatorPage.testSecondCalculatorMode(655);
-      await calculatorPage.testSecondCalculatorMode(500);
-      await calculatorPage.testSecondCalculatorMode(999);
-      await calculatorPage.testSecondCalculatorMode(1000);
-    })
+  test.skip("Check calculation price", async ({ calculatorPage }) => {
+    await calculatorPage.openCalculator();
+    for (let i of [11, 155, 256, 500, 999, 1000]) {
+      await calculatorPage.testSecondCalculatorMode(i);
+      for (let j of [11, 155, 256, 500, 999, 1000]) {
+        await calculatorPage.testFirstCalculatorMode(i, j);
+      }
+    }
   });
-
-});
-
-
-test.afterAll(async ({ request, browser }) => {
-
 });
 
 

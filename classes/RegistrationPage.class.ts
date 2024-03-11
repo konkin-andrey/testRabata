@@ -1,13 +1,14 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
+
 export class RegistrationPage extends BasePage {
-    NAME_FIELD: Locator;
-    SUBMIT_BUTTON: Locator;
-    MAIL_FIELD: Locator;
-    PASSWORD_FIELD_FST: Locator;
-    PASSWORD_FIELD_SEC: Locator;
-    CONF_CHBOX: Locator;
-    SIGNUP_BTN: Locator;
+  NAME_FIELD: Locator;
+  SUBMIT_BUTTON: Locator;
+  MAIL_FIELD: Locator;
+  PASSWORD_FIELD_FST: Locator;
+  PASSWORD_FIELD_SEC: Locator;
+  CONF_CHBOX: Locator;
+  SIGNUP_BTN: Locator;
   MAIL_ERROR_FLD: Locator;
   constructor(page: Page) {
     super(page);
@@ -20,32 +21,32 @@ export class RegistrationPage extends BasePage {
     this.SIGNUP_BTN = this.page.locator('button').filter({ hasText: 'Sign up' })
     this.MAIL_ERROR_FLD = this.page.locator("p[data-error-map]");
   }
-  
+
   async openLoginPage() {
-    await test.step(`Open login page`, async () => {
+    await test.step(`open login page`, async () => {
       await this.openPage(`${process.env.BASE_URL}/login`);
     });
   }
-  async setMail(login: string) {
-    await test.step(`set login`, async () => {
+  async setMail(mail: string) {
+    await test.step(`set main ${mail}`, async () => {
       await this.MAIL_FIELD.clear();
-      await this.MAIL_FIELD.type(login, {timeout: 500});
-      expect(await this.MAIL_FIELD.inputValue()).toBe(login);
+      await this.MAIL_FIELD.type(mail, { delay: 25 });
+      expect(await this.MAIL_FIELD.inputValue()).toBe(mail);
     });
   }
-  async setName(login: string) {
-    await test.step(`set name`, async () => {
+  async setName(name: string) {
+    await test.step(`set name ${name}`, async () => {
       await this.NAME_FIELD.clear();
-      await this.NAME_FIELD.type(login, {timeout: 500});
-      expect(await this.NAME_FIELD.inputValue()).toBe(login);
+      await this.NAME_FIELD.type(name, { delay: 25 });
+      expect(await this.NAME_FIELD.inputValue()).toBe(name);
     });
   }
   async setPasswords(password_fst: string, password_sec: string) {
-    await test.step(`set password`, async () => {
+    await test.step(`set password ${password_fst}`, async () => {
       await this.PASSWORD_FIELD_FST.clear();
-      await this.PASSWORD_FIELD_FST.type(password_fst, {timeout: 500});
+      await this.PASSWORD_FIELD_FST.type(password_fst, { delay: 25 });
       await this.PASSWORD_FIELD_SEC.clear();
-      await this.PASSWORD_FIELD_SEC.type(password_sec, {timeout: 500});
+      await this.PASSWORD_FIELD_SEC.type(password_sec, { delay: 25 });
       expect((await this.PASSWORD_FIELD_FST.inputValue()).length).toBe(password_fst.length);
       expect((await this.PASSWORD_FIELD_SEC.inputValue()).length).toBe(password_fst.length);
     });
@@ -53,25 +54,25 @@ export class RegistrationPage extends BasePage {
 
   async setAgreeCheckBox() {
     await test.step(`set agree checkbox`, async () => {
-      await this.CONF_CHBOX.evaluate((el: any)=>el.click());
+      await this.CONF_CHBOX.evaluate((el: any) => el.click());
       await expect(this.CONF_CHBOX).toHaveClass("checkbox is-valid");
     });
   }
 
   async clickSignUpButton() {
-    await test.step(`set password`, async () => {
+    await test.step(`click "SignUp" btn`, async () => {
       await this.SIGNUP_BTN.click();
     });
   }
 
   async openRegistationPage() {
-    await test.step(`Open registration page`, async () => {
+    await test.step(`open registration page`, async () => {
       await this.openPage(`${process.env.BASE_URL}/signup`);
     });
   }
 
   async registerAs(name: string, mail: string, password_fst: string, password_sec = password_fst) {
-    await test.step(`Log in`, async () => {
+    await test.step(`registr as name: ${name}, mail:${mail}, password_fst:${password_fst}`, async () => {
       await this.openRegistationPage();
       await this.setName(name);
       await this.setMail(mail);
@@ -81,5 +82,5 @@ export class RegistrationPage extends BasePage {
       expect(await this.MAIL_ERROR_FLD.count(), `При завершении регистрации возникла ошибка`).toBe(0);
     });
   }
-  
+
 }

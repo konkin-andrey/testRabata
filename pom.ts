@@ -3,6 +3,8 @@ import { LoginPage } from "./classes/LoginPage.class";
 import { CalculatorPage } from "./classes/CalculatorPage.class";
 import { RegistrationPage } from "./classes/RegistrationPage.class";
 import { MainPage } from "./classes/MainPage.class";
+import { GlobalSetting } from "./classes/GlobalSettings.class";
+import { Settings } from "./utils/types";
 
 
 type Pages = {
@@ -10,11 +12,16 @@ type Pages = {
   loginPage: LoginPage;
   registrationPage: RegistrationPage;
   calculatorPage: CalculatorPage;
+  globalSetting: GlobalSetting;
+  settings: Settings;
 }
 
 export const test = _test.extend<Pages>({
-  mainPage: async ({ page }, use) => {
-    await use(new MainPage(page));
+  globalSetting: async ({ settings }, use) => {
+    await use(new GlobalSetting(settings));
+  },
+  mainPage: async ({ page, globalSetting }, use) => {
+    await use(new MainPage(page, globalSetting));
   },
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));

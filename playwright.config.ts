@@ -6,6 +6,7 @@ dotenv.config();
 export default defineConfig({
   testDir: "./tests",
   timeout: 25000,
+  fullyParallel: true,
   expect: {
     timeout: 25000
   },
@@ -21,17 +22,25 @@ export default defineConfig({
     {
       name: 'Chromium',
       use: {
-        ...devices['Desktop Chrome'],
-        viewport: { width: 1920, height: 1080 },
-        navigationTimeout: 100000,
-      },
+          ...devices['Desktop Chrome'],
+          viewport: { width: 1920, height: 1080 },
+          navigationTimeout: 100000,
+          globalSettings: {
+            mail: process.env.MAILOSAUR_SERVER_1 as string,
+            //mozilaMail: process.env.MAILOSAUR_SERVER_2 as string
+          }
+      } as any,
     },
     {
       name: 'Mozila',
       use: {
-        ...devices['Desktop Firefox'],
-        viewport: { width: 1920, height: 1080 },
-        navigationTimeout: 100000,
+          ...devices['Desktop Firefox'],
+          viewport: { width: 1920, height: 1080 },
+          navigationTimeout: 100000,
+          globalSettings: {
+            //chromeMail: process.env.MAILOSAUR_SERVER_1 as string,
+            mail: process.env.MAILOSAUR_SERVER_2 as string
+          }
       },
     }
   ],

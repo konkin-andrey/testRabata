@@ -28,6 +28,14 @@ export default defineConfig({
           viewport: { width: 1920, height: 1080 },
           navigationTimeout: 100000,
       },
+    },
+    {
+      name: 'Mozila',
+      use: {
+          ...devices['Desktop Firefox'],
+          viewport: { width: 1920, height: 1080 },
+          navigationTimeout: 100000,
+      },
     }
   ],
 });

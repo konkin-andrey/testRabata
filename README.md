@@ -13,10 +13,12 @@
 
 API ключ и всё прочее находится в .env
 
-Исходный код тест-кейса, находится в tests\test.spec.ts, запуск
+Исходный код тест-кейса, находится в tests\test.spec.ts, запуск коамндами
 
 ```
  npm run start
+ npm run start_chrome
+ npm run start_mozila
 ```
 
 Добавлен просмотр отчётов в Allure (для работы необходима Java 8+)

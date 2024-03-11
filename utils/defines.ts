@@ -1,7 +1,6 @@
 export default
   {
     reg_name: process.env.REG_NAME as string,
-    reg_mail: process.env.LOGIN as string,
     reg_password: process.env.PASSWORD as string,
     mail_api_key: process.env.MAILOSAUR_API_KEY as string,
     mail_server_1: process.env.MAILOSAUR_SERVER_1 as string,

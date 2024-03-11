@@ -5,10 +5,10 @@ dotenv.config();
 
 export default defineConfig({
   testDir: "./tests",
-  timeout: 25000,
+  timeout: 55000,
   fullyParallel: true,
   expect: {
-    timeout: 25000
+    timeout: 55000
   },
   reporter: [["line"], ["allure-playwright"]],
   use: {

@@ -1,5 +1,6 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
+import { delay } from '../utils/helper';
 
 export class RegistrationPage extends BasePage {
   NAME_FIELD: Locator;

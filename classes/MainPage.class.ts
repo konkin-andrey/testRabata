@@ -1,8 +1,6 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
 import defines from '../utils/defines';
-import { GlobalSetting } from './GlobalSettings.class';
-import { Settings } from '../utils/types';
 
 export class MainPage extends BasePage {
   TRY_FOR_FREE_BTN: Locator;

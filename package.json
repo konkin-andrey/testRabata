@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Тестовое задание ",
   "scripts": {
-    "start": "npx playwright test tests  --workers 1 --trace on --headed --reporter=line,allure-playwright",
+    "start_chrome": "npx playwright test tests --trace on --headed --reporter=line,allure-playwright --project Chromium",
+    "start_mozila": "npx playwright test tests --trace on --headed --reporter=line,allure-playwright --project Mozila",
+    "start_parallel": "npx playwright test tests --trace on --headed --reporter=line,allure-playwright",
     "generate-allure": "npx allure generate allure-results -o allure-report --clean",
     "open-allure": "npx allure open allure-report",
     "allure": "npm run generate-allure && npm run open-allure"

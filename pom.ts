@@ -5,7 +5,6 @@ import { RegistrationPage } from "./classes/RegistrationPage.class";
 import { MainPage } from "./classes/MainPage.class";
 import { Settings } from "./utils/types";
 
-
 type Pages = {
   mainPage: MainPage;
   loginPage: LoginPage;
@@ -15,7 +14,6 @@ type Pages = {
 }
 
 export const test = _test.extend<Pages>({
-
   mainPage: async ({ page }, use) => {
     await use(new MainPage(page));
   },
@@ -29,5 +27,4 @@ export const test = _test.extend<Pages>({
     await use(new CalculatorPage(page));
   },
   settings: [[], { option: true }] as any,
-
 })

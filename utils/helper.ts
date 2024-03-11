@@ -8,8 +8,8 @@ export async function getMailLink(apiKey: string, server: string) {
       sentTo: server + "@mailosaur.net",
       subject: "Please Confirm your Email"
     }
-    await mailosaur.messages.deleteAll(server);
     const email = await mailosaur.messages.get(server, criteria, { timeout: 60000 });
+    await mailosaur.messages.deleteAll(server);
     const letter = email.html.links[1];
     expect(letter, "Письмо с верификацией mail не найдено").toHaveProperty("href");
     expect(isValidUrl(letter.href), "Не удалось получить ссылку для проверки mail").toBe(true);

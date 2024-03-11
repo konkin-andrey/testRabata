@@ -1,5 +1,6 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
+import { Settings } from '../utils/types';
 
 export class LoginPage extends BasePage {
   LOGIN_FIELD: Locator;
@@ -7,9 +8,11 @@ export class LoginPage extends BasePage {
   SUBMIT_BTN: Locator;
   TRY_FOR_FREE_BTN: Locator;
   ERROR_MSG: Locator;
-  constructor(page: Page) {
+  settings: Settings;
+  constructor(page: Page, settings: Settings) {
     super(page);
     this.LOGIN_FIELD = this.page.locator('input[id=username]');
+    this.settings = settings;
     this.PASSWORD_FIELD = this.page.locator('input[id=password]');
     this.SUBMIT_BTN = this.page.locator('button').filter({ hasText: 'Log in' });
     this.TRY_FOR_FREE_BTN = this.page.locator('a[href=signup]');
@@ -24,7 +27,7 @@ export class LoginPage extends BasePage {
   async setLogin(login: string) {
     await test.step(`set login`, async () => {
       await this.LOGIN_FIELD.clear();
-      await this.LOGIN_FIELD.type(login, { delay: 25 });
+      await this.LOGIN_FIELD.fill(login);
       expect(await this.LOGIN_FIELD.inputValue()).toBe(login);
       expect(await this.ERROR_MSG.count(), `При заполнении логин возникла ошибка: ${await this.ERROR_MSG.allInnerTexts()}`).toBe(0);
     });
@@ -32,7 +35,7 @@ export class LoginPage extends BasePage {
   async setPassword(password: string) {
     await test.step(`set password`, async () => {
       await this.PASSWORD_FIELD.clear();
-      await this.PASSWORD_FIELD.type(password, { delay: 25 });
+      await this.PASSWORD_FIELD.fill(password);
       expect(await this.ERROR_MSG.count(), `При заполнении пароля возникла ошибка: ${await this.ERROR_MSG.allInnerTexts()}`).toBe(0);
     });
   }
@@ -51,6 +54,10 @@ export class LoginPage extends BasePage {
       await this.setPassword(password);
       await this.clickSubmitButton();
     });
+  }
+
+  get mail() {
+    return this.settings.mail;
   }
 
 }

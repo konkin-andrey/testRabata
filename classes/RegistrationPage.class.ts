@@ -30,23 +30,23 @@ export class RegistrationPage extends BasePage {
   async setMail(mail: string) {
     await test.step(`set main ${mail}`, async () => {
       await this.MAIL_FIELD.clear();
-      await this.MAIL_FIELD.type(mail, { delay: 25 });
+      await this.MAIL_FIELD.fill(mail);
       expect(await this.MAIL_FIELD.inputValue()).toBe(mail);
     });
   }
   async setName(name: string) {
     await test.step(`set name ${name}`, async () => {
       await this.NAME_FIELD.clear();
-      await this.NAME_FIELD.type(name, { delay: 25 });
+      await this.NAME_FIELD.fill(name);
       expect(await this.NAME_FIELD.inputValue()).toBe(name);
     });
   }
   async setPasswords(password_fst: string, password_sec: string) {
     await test.step(`set password ${password_fst}`, async () => {
       await this.PASSWORD_FIELD_FST.clear();
-      await this.PASSWORD_FIELD_FST.type(password_fst, { delay: 25 });
+      await this.PASSWORD_FIELD_FST.fill(password_fst);
       await this.PASSWORD_FIELD_SEC.clear();
-      await this.PASSWORD_FIELD_SEC.type(password_sec, { delay: 25 });
+      await this.PASSWORD_FIELD_SEC.fill(password_sec);
       expect((await this.PASSWORD_FIELD_FST.inputValue()).length).toBe(password_fst.length);
       expect((await this.PASSWORD_FIELD_SEC.inputValue()).length).toBe(password_fst.length);
     });

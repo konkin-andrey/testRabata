@@ -2,6 +2,7 @@ import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
 import defines from '../utils/defines';
 import { GlobalSetting } from './GlobalSettings.class';
+import { Settings } from '../utils/types';
 
 export class MainPage extends BasePage {
   TRY_FOR_FREE_BTN: Locator;
@@ -9,10 +10,8 @@ export class MainPage extends BasePage {
   PRIVACY_POLICY_MODAL: Locator;
   PRIVACY_POLICY_TEXT: Locator;
   PRIVACY_POLICY_CLOSE_BTN: Locator;
-  globalSetting: GlobalSetting;
-  constructor(page: Page, globalSetting: GlobalSetting) {
+  constructor(page: Page) {
     super(page);
-    this.globalSetting = globalSetting;
     this.TRY_FOR_FREE_BTN = this.page.locator('a[href=signup]').filter({ hasText: 'Try it For Free' });
     this.PRIVACY_POLICY_BTN = this.page.locator('footer a').filter({ hasText: 'Privacy policy' });;
     this.PRIVACY_POLICY_MODAL = this.page.locator("div[id=modalPrivacy] div[class=modal-container]");
@@ -20,11 +19,13 @@ export class MainPage extends BasePage {
     this.PRIVACY_POLICY_MODAL = this.page.locator("div[id=modalPrivacy] div[class=modal-container]");
     this.PRIVACY_POLICY_CLOSE_BTN = this.page.locator("div[class*=modal-close-btn]").filter({ hasText: 'OK' });
   }
+
   async openMainPage() {
     await test.step(`Open main page`, async () => {
       await this.openPage(`${process.env.BASE_URL}`);
     });
   }
+
   async checkTryItForFreeBtn(btnIndex: number) {
     await test.step(`Сlick try it for free btn`, async () => {
       expect(await this.TRY_FOR_FREE_BTN.count(), "Не найдена кнопка Try it for free").toBe(2);

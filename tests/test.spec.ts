@@ -6,23 +6,12 @@ import { changeMailRequest, getMailLink, verifyMail } from '../utils/helper';
 test.describe(`Rabata tests`, async () => {
 
 
-
-  test("Registration test123", async ({ globalSetting }) => {
-    console.log(globalSetting.settings.mail)
-  });
-
-
-
-
-
-
-
-
-
   //Тест 1: Регистрация на сайте
-  test.skip("Registration test", async ({ registrationPage, request, loginPage, browser }) => {
+  test("Registration test", async ({ registrationPage, request, loginPage, browser }) => {
     await registrationPage.registerAs(defines.reg_name, defines.reg_mail, defines.reg_password);
-    const href = await getMailLink(defines.mail_api_key, defines.mail_server);
+    const mail = loginPage.mail,
+      href = await getMailLink(defines.mail_api_key, mail);
+
     await verifyMail(request, href);
     await loginPage.loginAs(defines.reg_mail, defines.reg_password);
     //Замена почты зарегистрированного пользователя для повторной регистрации нового пользователя под старой почтой

@@ -43,7 +43,7 @@ export function isValidUrl(url: string) {
 }
 
 
-export const delay = ms => new Promise(r => setTimeout(r, ms));
+export const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 export function getRandomInRange(min: number, max: number): number {
   min = Math.ceil(min);

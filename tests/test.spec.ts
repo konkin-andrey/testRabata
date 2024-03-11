@@ -1,6 +1,6 @@
 import { test } from '../pom'
 import defines from '../utils/defines';
-import { changeMailRequest, delay, getMailLink, verifyMail } from '../utils/helper';
+import { changeMailRequest, getMailLink, verifyMail } from '../utils/helper';
 
 
 test.describe(`Rabata tests`, async () => {

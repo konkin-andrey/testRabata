@@ -3,8 +3,8 @@
 Для инициалищации репозитория
 
 ```
- npm i
- npm init playwright@latest
+  npm i
+  npm init playwright@latest
 ```
 
 Для прохождения кейса с регистрацией был использован сервис mailosau, создающий среду для работы с почтовым ящиком. К сожалению, триал заканчивается 24 марта:/
@@ -19,13 +19,13 @@ API ключ и всё прочее находится в .env
 Исходный код тест-кейса, находится в tests\test.spec.ts, запуск коамндами
 
 ```
- npm run start
- npm run start_chrome
- npm run start_mozila
+  npm run start
+  npm run start_chrome
+  npm run start_mozila
 ```
 
 Добавлен просмотр отчётов в Allure (для работы необходима Java 8+)
 
 ```
-npm run allure
+  npm run allure
 ```

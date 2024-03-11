@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
-import { config } from 'dotenv';
-import { resolve } from 'path';
+import dotenv from 'dotenv';
 
-config({ path: resolve(__dirname, '.env'), override: true });
+dotenv.config();
+
 export default defineConfig({
   testDir: "./tests",
   timeout: 25000,
@@ -16,9 +16,6 @@ export default defineConfig({
     headless: false,
     // retries: 1,
     trace: 'on-first-retry',
-
-    //apptype : "fd1" as string,
-    baseURL: process.env.BASE_URL,
   },
   projects: [
     {

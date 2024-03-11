@@ -1,7 +1,7 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
-import { getRandomInRange, roundTo10 } from './utils.class';
-import defines from './defines';
+import { getRandomInRange, pathcSliderValue } from '../utils/utils';
+import defines from '../utils/defines';
 
 
 export class CalculatorPage extends BasePage {
@@ -30,23 +30,11 @@ export class CalculatorPage extends BasePage {
 
     await this.RADIO_BASIC.click();
 
-    await slider.evaluate((slider: any, input_value: number) => {
-      slider.value = input_value;
-      slider.dispatchEvent(new Event('input', { 'bubbles': true }));
-      slider.dispatchEvent(new Event('change', { 'bubbles': true }));
-      return true;
-    }, value1);
-
-    await slider2.evaluate((slider: any, input_value: number) => {
-      slider.value = input_value;
-      slider.dispatchEvent(new Event('input', { 'bubbles': true }));
-      slider.dispatchEvent(new Event('change', { 'bubbles': true }));
-      return true;
-    }, value2);
-
+    await pathcSliderValue(slider, value1);
+    await pathcSliderValue(slider2, value2);
 
     const actual = +(await final_sum.innerText()).match(/\d+/g)[0],
-      // прайс base_cost за гигабайт трафика, на форме слайдер в тб, плюс на 12 месяцев в году
+      // прайс tariff_1_price за гигабайты трафика с двух сладеров, на форме слайдер в тб, поэтому умнажение на 1000, плюс на 12 месяцев в году
       calculated = (value1 + value2) * 1000 * defines.tariff_1_price * 12;
     expect(actual, `вычисленное значение для первого тарифа: ${calculated} не соответствует значению в калькуляторе: ${actual}`).toEqual(calculated);
   }
@@ -54,20 +42,13 @@ export class CalculatorPage extends BasePage {
   async testSecondCalculatorMode(value = getRandomInRange(1, 1000)) {
     const slider = this.page.locator('[id="dataStoredInput"]'),
       final_sum = this.page.locator('p[id="rabataMobile"]');
-      //value = getRandomInRange(1, 1000),
     await this.RADIO_BACKUP.click();
 
-    await slider.evaluate((slider: any, input_value: number) => {
-      slider.value = input_value;
-      slider.dispatchEvent(new Event('input', { 'bubbles': true }));
-      slider.dispatchEvent(new Event('change', { 'bubbles': true }));
-      return true;
-    }, value);
-
+    await pathcSliderValue(slider, value);
 
     const actual = +(await final_sum.innerText()).match(/\d+/g)[0],
-      // прайс base_cost за 10 тб трафика, плюс на 12 месяцев в году
-    calculated = roundTo10(value) * defines.tariff_2_price * 12 / 10;
+      // прайс defines за 10 тб трафика, поэтому делим на 10 и округляем наверх, плюс на 12 месяцев в году
+      calculated = Math.ceil(value / 10) * defines.tariff_2_price * 12;
     expect.soft(actual, `вычисленное значение для трафика: ${value}TB по второму тарифу: ${calculated} не соответствует значению в калькуляторе: ${actual}`).toEqual(calculated);
   }
 

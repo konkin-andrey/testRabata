@@ -9,7 +9,7 @@ type Pages = {
   mainPage: MainPage;
   loginPage: LoginPage;
   registrationPage: RegistrationPage;
-  calcPage: CalculatorPage;
+  calculatorPage: CalculatorPage;
 }
 
 export const test = _test.extend<Pages>({
@@ -22,7 +22,7 @@ export const test = _test.extend<Pages>({
   registrationPage: async ({ page }, use) => {
     await use(new RegistrationPage(page));
   },
-  calcPage: async ({ page }, use) => {
+  calculatorPage: async ({ page }, use) => {
     await use(new CalculatorPage(page));
   }
 })

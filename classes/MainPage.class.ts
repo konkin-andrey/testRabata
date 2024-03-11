@@ -1,6 +1,6 @@
 import { Page, test, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage.class';
-import defines from './defines';
+import defines from '../utils/defines';
 
 export class MainPage extends BasePage {
   TRY_FOR_FREE_BTN: Locator;

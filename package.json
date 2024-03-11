@@ -1,8 +1,7 @@
 {
   "name": "testRabata",
   "version": "1.0.0",
-  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
-  "main": "index.js",
+  "description": "Тестовое задание ",
   "scripts": {
     "start": "npx playwright test tests  --workers 1 --trace on --headed"
   },
@@ -11,15 +10,13 @@
     "url": "https://github.com/konkin-andrey/testRabata.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "KA",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.36.2"
   },
   "dependencies": {
-    "@faker-js/faker": "^8.0.2",
     "dotenv": "^16.3.1",
-    "mailinator-inbox": "^1.3.0",
     "mailosaur": "^8.6.1"
   }
 }

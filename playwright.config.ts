@@ -9,7 +9,7 @@ export default defineConfig({
   expect: {
     timeout: 25000
   },
-  reporter: [['html'], ['junit', { outputFile: './playwright-report/results.xml' }], ['list']],
+  reporter: [["line"], ["allure-playwright"]],
   use: {
     actionTimeout: 100000,
     navigationTimeout: 100000,
@@ -21,17 +21,17 @@ export default defineConfig({
     {
       name: 'Chromium',
       use: {
-          ...devices['Desktop Chrome'],
-          viewport: { width: 1920, height: 1080 },
-          navigationTimeout: 100000,
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1920, height: 1080 },
+        navigationTimeout: 100000,
       },
     },
     {
       name: 'Mozila',
       use: {
-          ...devices['Desktop Firefox'],
-          viewport: { width: 1920, height: 1080 },
-          navigationTimeout: 100000,
+        ...devices['Desktop Firefox'],
+        viewport: { width: 1920, height: 1080 },
+        navigationTimeout: 100000,
       },
     }
   ],

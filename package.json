@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Тестовое задание ",
   "scripts": {
-    "start": "npx playwright test tests  --workers 1 --trace on --headed"
+    "start": "npx playwright test tests  --workers 1 --trace on --headed --reporter=line,allure-playwright",
+    "generate-allure": "npx allure generate allure-results -o allure-report --clean",
+    "open-allure": "npx allure open allure-report",
+    "allure": "npm run generate-allure && npm run open-allure"
   },
   "repository": {
     "type": "git",
@@ -13,7 +16,10 @@
   "author": "KA",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.36.2"
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.11.25",
+    "allure-commandline": "^2.27.0",
+    "allure-playwright": "^2.14.1"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
